@@ -6,136 +6,178 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <title>Administration</title>
     <style>
-       
-        #contenu { margin-top: 20px; }
-      
-        #ajout-form { margin-top: 20px;border:1px solid #D2B48C; padding: 15px; background:#1e1e24; display: none;width:80%; border-radius:20px;
-         }
-    
-       #title-input{
-           border-radius:15px;
-        background:#1c1c1e;
-        border:1px solid #D2B48C;
-        color: white;
-       } 
-    #texte-input{
-        width:150px;
-        border-radius:15px;
-        background:#1c1c1e;
-        color: white;
-        border:1px solid #D2B48C;
-    }   
-    
-    image-input{
-        background:#D2B48C;
-    }
-    body,html{
-        padding:0;
-        margin:0;
-    }
-    body{
-        background:#121212;
-        color:#eee;
-        
-    }
-    main{
-     display:flex;
-     flex-direction:column;
-     align-items: center;
-       
-    }
-    footer{
-        text-align:center;
-    }
-    h1{
-        color:#00F2ff;
-        font-family:fantasy;
-        font-size:50px;
-    }
-    header{
-        text-align:center;
-        color:#eee;
-        font-size:30px;
-        font-family:cursive;
-        position: fixed;
+        #contenu { margin-top: 20px; display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; }
+        #ajout-form { margin-top: 20px; border:1px solid #D2B48C; padding: 15px; background:#1e1e24; display: none; width:80%; max-width:500px; border-radius:20px; }
+        #title-input {
+            border-radius:15px;
+            background:#1c1c1e;
+            border:1px solid #D2B48C;
+            color: white;
+            width:100%;
+            padding:8px;
+            box-sizing:border-box;
+        } 
+        #texte-input{
+            width:100%;
+            border-radius:15px;
+            background:#1c1c1e;
+            color: white;
+            border:1px solid #D2B48C;
+            padding:8px;
+            box-sizing:border-box;
+        }   
+        body,html{
+            padding:0;
+            margin:0;
+        }
+        body{
+            background:#121212;
+            color:#eee;
+        }
+        main{
+            display:flex;
+            flex-direction:column;
+            align-items: center;
+        }
+        footer{
+            text-align:center;
+        }
+        h1{
+            color:#00F2ff;
+            font-family:fantasy;
+            font-size:50px;
+            text-align:center;
+        }
+        header{
+            text-align:center;
+            color:#eee;
+            font-size:30px;
+            font-family:cursive;
+            position: fixed;
             width: 100%;
             z-index: 1000;
             background:#1e1e24;
-        
-    }
-     #pointer{
+            padding:10px 0;
+        }
+        #pointer{
             font-size:30px;
             position: relative;
             left:80px;
             cursor:pointer;
-          color:#00F2ff;
+            color:#00F2ff;
         }
-        /* for button in each post */
-   .btn{
+        .btn{
             background:#1c1c1e;
             border:1px solid #D2B48C;
             width:100px;
             height:35px;
             border-radius:25px;
-             cursor:pointer;
+            cursor:pointer;
         }
-        /* to align btns */
-       /* La grande div devient un repère pour le positionnement absolu */
-
-/* Le conteneur des boutons est placé en bas */
-#btn-div {
-  position: absolute;
-  bottom: 10px;        /* ajustez pour "presqu'à la fin" (10px du bas) */
-  left: 0;
-  width: 100%;          /* occupe toute la largeur */
-  display: flex;
-  justify-content: center; /* centre les boutons horizontalement (vous pouvez changer) */
-  gap: 10px;            /* espace de 10px entre les boutons */
-}
-           
+        .item {
+            display: inline-block;
+            margin:10px;
+            vertical-align:top;
+        }
+        .card {
+            border-radius:20px;
+            border:1px solid #D2B48C;
+            background: #1e1e24;
+            width:280px;
+            height:500px;
+            color:#ccc;
+            text-align:center;
+            position:relative;
+            overflow:hidden;
+        }
+        .card img {
+            max-width:100%;
+            height:auto;
+            max-height:200px;
+            object-fit:cover;
+            border-radius:10px;
+            margin-top:10px;
+        }
+        .card h3 {
+            color:#D2B48C;
+            font-size:1.5rem;
+            margin:10px 0 5px;
+        }
+        .card p {
+            margin:5px 10px;
+        }
+        .card .date {
+            font-size:0.8rem;
+            color:#888;
+        }
+        #btn-div {
+            position: absolute;
+            bottom: 10px;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
         #ajouter{
             background-color: transparent;
             border: 2px solid #D2B48C;
             color:#D2B48C;
             margin-bottom: 20px;
             height:35px;
+            cursor:pointer;
         }
-
+        .action-buttons {
+            margin-top: 10px;
+            text-align:center;
+        }
+        .action-buttons button {
+            background:#2a2a2a;
+            border:1px solid #D2B48C;
+            color:white;
+            border-radius:5px;
+            padding:5px 10px;
+            margin:2px;
+            cursor:pointer;
+        }
+        .options {
+            margin-top:10px;
+            text-align:center;
+        }
     </style>
 </head>
 <body>
- <header><img style="border-radius:3000px;clip-path:circle(50% at 50% 50%);width:30px;height:30px; background:white; position:relative;right:85px;" src="https://i.ibb.co/C5hDb54V/126509.png" alt="">Boutique<span id="pointer"><b>&#8942</b></span></header><br><br> 
- <main>
-  <h1>
-        Achetez nos produits exception-<br>nels 
-    </h1>
-  
-  
-  
-  <br><br><br>
-    <button id="ajouter"><i class="fas fa-plus-circle"></i> Ajouter un élément</button>
-    <div id="contenu"></div>
+    <header>
+        <img style="border-radius:3000px;clip-path:circle(50% at 50% 50%);width:30px;height:30px; background:white; position:relative;right:85px;" src="https://i.ibb.co/C5hDb54V/126509.png" alt="">
+        Boutique<span id="pointer"><b>&#8942</b></span>
+    </header>
+    <br><br><br> 
+    <main>
+        <h1>Achetez nos produits exceptionnels</h1>
+        
+        <button id="ajouter"><i class="fas fa-plus-circle"></i> Ajouter un élément</button>
+        <div id="contenu"></div>
 
-    <!-- Formulaire d'ajout -->
-    <div id="ajout-form">
-        <h3>Nouvel élément</h3>
-        <textarea id="title-input" placeholder="titre" required></textarea>
-        <input type="file" id="image-input" accept="image/*"><br><br>
-        <textarea id="texte-input" placeholder="Texte de l'article" rows="4" cols="50" required></textarea><br><br>
-        <button id="ajouter-element" style="background:#00FFAA;border:1px solid #00FFAA; border-radius:8px;width:80px; height:30px;">Publier</button>
-        <button id="annuler" style="background:#FF4D4D;border:1px solid #FF4D4D; border-radius:8px;width:80px; height:30px;"> Annuler</button>
-    </div>
-</main>
-<br><br><br><br> <br><br><br><br>
-<hr>
-<footer>
-    All rights reserved.©2026
- <br>   by <a href="botolo40.github.io/mindy/" style="color:#E6C200;">MindyEntreprise</a>
-</footer>
+        <!-- Formulaire d'ajout -->
+        <div id="ajout-form">
+            <h3>Nouvel élément</h3>
+            <textarea id="title-input" placeholder="Titre" required></textarea><br>
+            <input type="file" id="image-input" accept="image/*"><br><br>
+            <textarea id="texte-input" placeholder="Texte de l'article" rows="4" required></textarea><br><br>
+            <button id="ajouter-element" style="background:#00FFAA;border:1px solid #00FFAA; border-radius:8px;width:80px; height:30px;">Publier</button>
+            <button id="annuler" style="background:#FF4D4D;border:1px solid #FF4D4D; border-radius:8px;width:80px; height:30px;">Annuler</button>
+        </div>
+    </main>
+    <br><br><br><br><br><br><br><br>
+    <hr>
+    <footer>
+        All rights reserved.©2026<br>by <a href="botolo40.github.io/mindy/" style="color:#E6C200;">MindyEntreprise</a>
+    </footer>
+
     <script>
-        // Vos identifiants
+        // 🔧 REMPLACEZ CELLE-CI PAR VOTRE VRAIE CLÉ API (sans points)
         const BIN_ID = '69b7fd00c3097a1dd52d4ef1';
-        const API_KEY = '$2a$10$JRui1R/HR86PR7CN1SitdekmJGwxztWm92GNShHT/i...4sMbKlb.'; // Votre clé complète
+        const API_KEY = '$2a$10$JRui1R/HR86PR7CN1SitdekmJGwxztWm92GNShHT/i...4sMbKlb.'; // <-- À CORRIGER
 
         const READ_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}/latest`;
         const WRITE_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
@@ -145,29 +187,32 @@
         const contenuDiv = document.getElementById('contenu');
         const ajoutForm = document.getElementById('ajout-form');
         const imageInput = document.getElementById('image-input');
-        const titleInput= document.getElementById('title-input');
+        const titleInput = document.getElementById('title-input');
         const texteInput = document.getElementById('texte-input');
         const ajouterElement = document.getElementById('ajouter-element');
         const annuler = document.getElementById('annuler');
 
-
-        const height = 320;
+        const height = 200; // hauteur max de l'image dans l'affichage
+        const width = 280;  // largeur de la carte
 
         let elements = []; // Tableau local des articles
 
         // Charger les données depuis JSONBin
         async function chargerDonnees() {
             try {
-                const response = await fetch(READ_URL); // Pas besoin de clé pour lire (bin public)
+                const response = await fetch(READ_URL);
                 const data = await response.json();
-                elements = data.record.articles || [];
+                // Si la structure n'existe pas, on initialise un tableau vide
+                elements = (data.record && data.record.articles) ? data.record.articles : [];
                 afficherElements();
             } catch (error) {
                 console.error('Erreur de chargement', error);
+                elements = []; // en cas d'erreur, on part de zéro
+                afficherElements();
             }
         }
 
-        // Sauvegarder les données sur JSONBin (nécessite la clé)
+        // Sauvegarder les données sur JSONBin
         async function sauvegarderDonnees() {
             try {
                 const response = await fetch(WRITE_URL, {
@@ -176,7 +221,7 @@
                         'Content-Type': 'application/json',
                         'X-Master-Key': API_KEY
                     },
-                    body: JSON.stringify({ articles: elements }) // On renvoie l'objet complet
+                    body: JSON.stringify({ articles: elements })
                 });
                 if (!response.ok) {
                     throw new Error(`Erreur HTTP ${response.status}`);
@@ -188,36 +233,29 @@
             }
         }
 
-        // Afficher tous les éléments avec boutons d'action
+        // Afficher tous les éléments
         function afficherElements() {
             contenuDiv.innerHTML = '';
             elements.forEach((element, index) => {
                 const itemDiv = document.createElement('div');
                 itemDiv.className = 'item';
                 itemDiv.innerHTML = `
-         <p style="font-size:35px;color:#D2B48C;"><b>{element.texte}</b></p>          
-              <!-- div for all posts -->   <div style="border-radius:20px;border:1px solid #D2B48C;background: #1e1e24;width:280px;height:500px;color:#ccc;text-align:center;position:relative;"  id="div"><i>
-                  
-              <br><br><br>    
-                   
-                    <img src="${element.image}" height="${element.height}" style="vertical-align:top; margin-right:10px;">
-                  
-                        
-                        
-                        <p><strong>${element.texte}</strong></p>
-                        
-                        <p><small>Publié le ${element.date}</small></p>
-                     <p>Contactez la personne qui vend!</p>   
-                <div id="btn-div"><button class="btn"><i class="fas fa-phone" style="color:#D2B48C;font-size:25px;"></i></button><button class="btn"><i class="fas fa-share-alt" Style="font-size:25px;color:#D2B48C;"></i></button><br></div>        
-                        
- </i> </div>                      
-                        
-                        
-                        
-                        <button onclick="modifierElement(${index})"><i class="fas fa-settings-icon"></i>Modifier</button>
-                        <button onclick="supprimerElement(${index})"> Supprimer</button>
+                    <div class="card">
+                        <img src="${element.image}" alt="Image" style="max-height:${height}px;">
+                        <h3>${element.title || 'Sans titre'}</h3>
+                        <p>${element.texte}</p>
+                        <p class="date">Publié le ${element.date}</p>
+                        <p>Contactez la personne qui vend!</p>
+                        <div id="btn-div">
+                            <button class="btn"><i class="fas fa-phone" style="color:#D2B48C;font-size:25px;"></i></button>
+                            <button class="btn"><i class="fas fa-share-alt" style="font-size:25px;color:#D2B48C;"></i></button>
+                        </div>
                     </div>
-                    <div id="options-${index}" style="display:none; margin-top:10px; clear:both;">
+                    <div class="action-buttons">
+                        <button onclick="modifierElement(${index})"><i class="fas fa-edit"></i> Modifier</button>
+                        <button onclick="supprimerElement(${index})"><i class="fas fa-trash"></i> Supprimer</button>
+                    </div>
+                    <div id="options-${index}" class="options" style="display:none;">
                         <button onclick="modifierTexte(${index})">Modifier le texte</button>
                         <button onclick="modifierImage(${index})">Modifier l'image</button>
                     </div>
@@ -226,7 +264,7 @@
             });
         }
 
-        // Fonctions globales pour les boutons (nécessaires car innerHTML)
+        // Fonctions globales (nécessaires pour les boutons dans innerHTML)
         window.modifierElement = function(index) {
             const options = document.getElementById(`options-${index}`);
             options.style.display = options.style.display === 'none' ? 'block' : 'none';
@@ -279,7 +317,6 @@
             imageInput.value = '';
             texteInput.value = '';
             titleInput.value = '';
-            
         });
 
         ajouterElement.addEventListener('click', async () => {
@@ -291,11 +328,12 @@
             const lecteur = new FileReader();
             lecteur.onload = async (e) => {
                 const imageUrl = e.target.result;
-                const texte = texteInput.value.trim() || '(sans texte)';
+                const titre = titleInput.value.trim() || 'Sans titre';
+                const texte = texteInput.value.trim() || '(sans description)';
                 const nouvelElement = {
                     image: imageUrl,
+                    title: titre,
                     texte: texte,
-                    title: title,
                     date: new Date().toLocaleString(),
                     width: width,
                     height: height
@@ -306,8 +344,7 @@
                     ajoutForm.style.display = 'none';
                     imageInput.value = '';
                     texteInput.value = '';
-                    titleInput.value
-= '';
+                    titleInput.value = '';
                 } else {
                     elements.pop(); // annuler en cas d'échec
                 }
@@ -315,8 +352,8 @@
             lecteur.readAsDataURL(fichier);
         });
 
-        // Initialisation : charger les données au démarrage
+        // Initialisation
         chargerDonnees();
     </script>
 </body>
-  </html>
+</html>
