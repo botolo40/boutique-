@@ -156,8 +156,12 @@
     <main>
         <h1>Achetez nos produits exceptionnels</h1>
         
-        <button id="ajouter"><i class="fas fa-plus-circle"></i> Ajouter un élément</button>
+       
         <div id="contenu"></div>
+
+
+
+ <button id="ajouter"><i class="fas fa-plus-circle"></i> Ajouter un élément</button>
 
         <!-- Formulaire d'ajout -->
         <div id="ajout-form">
@@ -193,7 +197,7 @@
         const ajouterElement = document.getElementById('ajouter-element');
         const annuler = document.getElementById('annuler');
 
-        const height = 200; // hauteur max de l'image (comme dans l'original)
+        const height = 320; // hauteur max de l'image (comme dans l'original)
 
         let elements = []; // Tableau local des articles
 
@@ -244,10 +248,10 @@
                     <div class="big-text">${element.texte}</div>
                     <!-- Carte produit -->
                     <div style="border-radius:20px; border:1px solid #D2B48C; background:#1e1e24; width:280px; height:500px; color:#ccc; text-align:center; position:relative;">
-                        <br><br><br>
+                        <br><br>
                         <img src="${element.image}" height="${element.height}" style="vertical-align:top; margin-right:10px;">
                         <p><strong>${element.texte}</strong></p>
-                        <p><small>Publié le ${element.date || 'date inconnue'}</small></p>
+                       <br> <p><small>Publié le ${element.date || 'date inconnue'}</small></p>
                         <p>Contactez la personne qui vend!</p>
                         <div id="btn-div">
                             <button class="btn"><i class="fas fa-phone" style="color:#D2B48C; font-size:25px;"></i></button>
