@@ -82,7 +82,7 @@
             border-radius: 25px;
             cursor: pointer;
         }
-        /* Style pour chaque article (conserve la disposition originale) */
+        /* Style pour chaque article */
         .item {
             margin: 20px 0;
             border: 1px solid #D2B48C;
@@ -156,12 +156,12 @@
     <main>
         <h1>Achetez nos produits exceptionnels</h1>
         
-       
+        <button id="ajouter"><i class="fas fa-plus-circle"></i> Ajouter un élément</button>
         <div id="contenu"></div>
 
 
 
- <button id="ajouter"><i class="fas fa-plus-circle"></i> Ajouter un élément</button>
+
 
         <!-- Formulaire d'ajout -->
         <div id="ajout-form">
@@ -197,9 +197,20 @@
         const ajouterElement = document.getElementById('ajouter-element');
         const annuler = document.getElementById('annuler');
 
-        const height = 320; // hauteur max de l'image (comme dans l'original)
+        const height = 320; // hauteur max de l'image
 
         let elements = []; // Tableau local des articles
+
+        // Fonction pour formater une date ISO en chaîne lisible (locale)
+        function formatDate(dateString) {
+            if (!dateString) return 'date inconnue';
+            try {
+                const date = new Date(dateString);
+                return date.toLocaleString();
+            } catch (e) {
+                return dateString; // fallback
+            }
+        }
 
         // Charger les données depuis JSONBin
         async function chargerDonnees() {
@@ -236,22 +247,30 @@
             }
         }
 
-        // Afficher tous les éléments (disposition originale corrigée)
+        // Afficher tous les éléments (triés par date décroissante)
         function afficherElements() {
+            // Trier du plus récent au plus ancien
+            elements.sort((a, b) => {
+                const dateA = a.date ? new Date(a.date) : new Date(0);
+                const dateB = b.date ? new Date(b.date) : new Date(0);
+                return dateB - dateA; // décroissant : récent d'abord
+            });
+
             contenuDiv.innerHTML = '';
             elements.forEach((element, index) => {
                 const itemDiv = document.createElement('div');
                 itemDiv.className = 'item';
-                // On utilise innerHTML avec les corrections nécessaires
+                // Utilisation de la date formatée
+                const dateLisible = formatDate(element.date);
                 itemDiv.innerHTML = `
                     <!-- Grand texte coloré -->
                     <div class="big-text">${element.texte}</div>
                     <!-- Carte produit -->
                     <div style="border-radius:20px; border:1px solid #D2B48C; background:#1e1e24; width:280px; height:500px; color:#ccc; text-align:center; position:relative;">
-                        <br><br>
+                        <br><br><br>
                         <img src="${element.image}" height="${element.height}" style="vertical-align:top; margin-right:10px;">
                         <p><strong>${element.texte}</strong></p>
-                       <br> <p><small>Publié le ${element.date || 'date inconnue'}</small></p>
+                        <p><small>Publié le ${dateLisible}</small></p>
                         <p>Contactez la personne qui vend!</p>
                         <div id="btn-div">
                             <button class="btn"><i class="fas fa-phone" style="color:#D2B48C; font-size:25px;"></i></button>
@@ -336,14 +355,14 @@
             const lecteur = new FileReader();
             lecteur.onload = async (e) => {
                 const imageUrl = e.target.result;
-                const titre = titleInput.value.trim() || 'Sans titre';  // on garde le titre dans l'objet (non affiché)
+                const titre = titleInput.value.trim() || 'Sans titre';
                 const texte = texteInput.value.trim() || '(sans description)';
                 const nouvelElement = {
                     image: imageUrl,
-                    title: titre,           // stocké mais non utilisé dans l'affichage actuel
+                    title: titre,
                     texte: texte,
-                    date: new Date().toLocaleString(),
-                    height: height           // hauteur fixe pour l'image
+                    date: new Date().toISOString(), // stockage ISO pour tri fiable
+                    height: height
                 };
                 elements.push(nouvelElement);
                 if (await sauvegarderDonnees()) {
