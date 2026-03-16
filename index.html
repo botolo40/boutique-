@@ -6,109 +6,110 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <title>Administration</title>
     <style>
-        #contenu { margin-top: 20px; display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; }
-        #ajout-form { margin-top: 20px; border:1px solid #D2B48C; padding: 15px; background:#1e1e24; display: none; width:80%; max-width:500px; border-radius:20px; }
+        #contenu { margin-top: 20px; }
+        #ajout-form { 
+            margin-top: 20px;
+            border: 1px solid #D2B48C; 
+            padding: 15px; 
+            background: #1e1e24; 
+            display: none; 
+            width: 80%; 
+            border-radius: 20px;
+        }
         #title-input {
-            border-radius:15px;
-            background:#1c1c1e;
-            border:1px solid #D2B48C;
+            border-radius: 15px;
+            background: #1c1c1e;
+            border: 1px solid #D2B48C;
             color: white;
-            width:100%;
-            padding:8px;
-            box-sizing:border-box;
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
         } 
-        #texte-input{
-            width:100%;
-            border-radius:15px;
-            background:#1c1c1e;
+        #texte-input {
+            width: 100%;
+            border-radius: 15px;
+            background: #1c1c1e;
             color: white;
-            border:1px solid #D2B48C;
-            padding:8px;
-            box-sizing:border-box;
+            border: 1px solid #D2B48C;
+            padding: 8px;
+            box-sizing: border-box;
         }   
-        body,html{
-            padding:0;
-            margin:0;
+        body, html {
+            padding: 0;
+            margin: 0;
         }
-        body{
-            background:#121212;
-            color:#eee;
+        body {
+            background: #121212;
+            color: #eee;
         }
-        main{
-            display:flex;
-            flex-direction:column;
+        main {
+            display: flex;
+            flex-direction: column;
             align-items: center;
         }
-        footer{
-            text-align:center;
+        footer {
+            text-align: center;
         }
-        h1{
-            color:#00F2ff;
-            font-family:fantasy;
-            font-size:50px;
-            text-align:center;
+        h1 {
+            color: #00F2ff;
+            font-family: fantasy;
+            font-size: 50px;
+            text-align: center;
         }
-        header{
-            text-align:center;
-            color:#eee;
-            font-size:30px;
-            font-family:cursive;
+        header {
+            text-align: center;
+            color: #eee;
+            font-size: 30px;
+            font-family: cursive;
             position: fixed;
             width: 100%;
             z-index: 1000;
-            background:#1e1e24;
-            padding:10px 0;
-        }
-        #pointer{
-            font-size:30px;
-            position: relative;
-            left:80px;
-            cursor:pointer;
-            color:#00F2ff;
-        }
-        .btn{
-            background:#1c1c1e;
-            border:1px solid #D2B48C;
-            width:100px;
-            height:35px;
-            border-radius:25px;
-            cursor:pointer;
-        }
-        .item {
-            display: inline-block;
-            margin:10px;
-            vertical-align:top;
-        }
-        .card {
-            border-radius:20px;
-            border:1px solid #D2B48C;
             background: #1e1e24;
-            width:280px;
-            height:500px;
-            color:#ccc;
-            text-align:center;
-            position:relative;
-            overflow:hidden;
+            padding: 10px 0;
         }
-        .card img {
-            max-width:100%;
-            height:auto;
-            max-height:200px;
-            object-fit:cover;
-            border-radius:10px;
-            margin-top:10px;
+        #pointer {
+            font-size: 30px;
+            position: relative;
+            left: 80px;
+            cursor: pointer;
+            color: #00F2ff;
         }
-        .card h3 {
-            color:#D2B48C;
-            font-size:1.5rem;
-            margin:10px 0 5px;
+        .btn {
+            background: #1c1c1e;
+            border: 1px solid #D2B48C;
+            width: 100px;
+            height: 35px;
+            border-radius: 25px;
+            cursor: pointer;
         }
-        .card p {
-            margin:5px 10px;
+        /* Style pour chaque article (conserve la disposition originale) */
+        .item {
+            margin: 20px 0;
+            border: 1px solid #D2B48C;
+            border-radius: 20px;
+            background: #1e1e24;
+            width: 280px;
+            height: 500px;
+            color: #ccc;
+            text-align: center;
+            position: relative;
+            display: inline-block;
+            vertical-align: top;
+            margin: 10px;
         }
-        .card .date {
-            font-size:0.8rem;
-            color:#888;
+        .item .big-text {
+            font-size: 35px;
+            color: #D2B48C;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .item img {
+            vertical-align: top;
+            margin-right: 10px;
+            max-width: 100%;
+            max-height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
         }
         #btn-div {
             position: absolute;
@@ -119,30 +120,30 @@
             justify-content: center;
             gap: 10px;
         }
-        #ajouter{
-            background-color: transparent;
-            border: 2px solid #D2B48C;
-            color:#D2B48C;
-            margin-bottom: 20px;
-            height:35px;
-            cursor:pointer;
-        }
         .action-buttons {
             margin-top: 10px;
-            text-align:center;
+            text-align: center;
         }
         .action-buttons button {
-            background:#2a2a2a;
-            border:1px solid #D2B48C;
-            color:white;
-            border-radius:5px;
-            padding:5px 10px;
-            margin:2px;
-            cursor:pointer;
+            background: #2a2a2a;
+            border: 1px solid #D2B48C;
+            color: white;
+            border-radius: 5px;
+            padding: 5px 10px;
+            margin: 2px;
+            cursor: pointer;
         }
         .options {
-            margin-top:10px;
-            text-align:center;
+            margin-top: 10px;
+            text-align: center;
+        }
+        #ajouter {
+            background-color: transparent;
+            border: 2px solid #D2B48C;
+            color: #D2B48C;
+            margin-bottom: 20px;
+            height: 35px;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -175,7 +176,7 @@
     </footer>
 
     <script>
-        // 🔧 REMPLACEZ CELLE-CI PAR VOTRE VRAIE CLÉ API (sans points)
+        // 🔧 REMPLACEZ CETTE CLÉ PAR VOTRE VRAIE CLÉ API (sans points)
         const BIN_ID = '69b7fd00c3097a1dd52d4ef1';
         const API_KEY = '$2a$10$JRui1R/HR86PR7CN1SitdekmJGwxztWm92GNShHT/i...4sMbKlb.'; // <-- À CORRIGER
 
@@ -192,8 +193,7 @@
         const ajouterElement = document.getElementById('ajouter-element');
         const annuler = document.getElementById('annuler');
 
-        const height = 200; // hauteur max de l'image dans l'affichage
-        const width = 280;  // largeur de la carte
+        const height = 200; // hauteur max de l'image (comme dans l'original)
 
         let elements = []; // Tableau local des articles
 
@@ -202,12 +202,11 @@
             try {
                 const response = await fetch(READ_URL);
                 const data = await response.json();
-                // Si la structure n'existe pas, on initialise un tableau vide
                 elements = (data.record && data.record.articles) ? data.record.articles : [];
                 afficherElements();
             } catch (error) {
                 console.error('Erreur de chargement', error);
-                elements = []; // en cas d'erreur, on part de zéro
+                elements = [];
                 afficherElements();
             }
         }
@@ -233,29 +232,34 @@
             }
         }
 
-        // Afficher tous les éléments
+        // Afficher tous les éléments (disposition originale corrigée)
         function afficherElements() {
             contenuDiv.innerHTML = '';
             elements.forEach((element, index) => {
                 const itemDiv = document.createElement('div');
                 itemDiv.className = 'item';
+                // On utilise innerHTML avec les corrections nécessaires
                 itemDiv.innerHTML = `
-                    <div class="card">
-                        <img src="${element.image}" alt="Image" style="max-height:${height}px;">
-                        <h3>${element.title || 'Sans titre'}</h3>
-                        <p>${element.texte}</p>
-                        <p class="date">Publié le ${element.date}</p>
+                    <!-- Grand texte coloré -->
+                    <div class="big-text">${element.texte}</div>
+                    <!-- Carte produit -->
+                    <div style="border-radius:20px; border:1px solid #D2B48C; background:#1e1e24; width:280px; height:500px; color:#ccc; text-align:center; position:relative;">
+                        <br><br><br>
+                        <img src="${element.image}" height="${element.height}" style="vertical-align:top; margin-right:10px;">
+                        <p><strong>${element.texte}</strong></p>
+                        <p><small>Publié le ${element.date || 'date inconnue'}</small></p>
                         <p>Contactez la personne qui vend!</p>
                         <div id="btn-div">
-                            <button class="btn"><i class="fas fa-phone" style="color:#D2B48C;font-size:25px;"></i></button>
-                            <button class="btn"><i class="fas fa-share-alt" style="font-size:25px;color:#D2B48C;"></i></button>
+                            <button class="btn"><i class="fas fa-phone" style="color:#D2B48C; font-size:25px;"></i></button>
+                            <button class="btn"><i class="fas fa-share-alt" style="font-size:25px; color:#D2B48C;"></i></button>
                         </div>
                     </div>
+                    <!-- Boutons d'administration -->
                     <div class="action-buttons">
                         <button onclick="modifierElement(${index})"><i class="fas fa-edit"></i> Modifier</button>
                         <button onclick="supprimerElement(${index})"><i class="fas fa-trash"></i> Supprimer</button>
                     </div>
-                    <div id="options-${index}" class="options" style="display:none;">
+                    <div id="options-${index}" class="options" style="display:none; margin-top:10px;">
                         <button onclick="modifierTexte(${index})">Modifier le texte</button>
                         <button onclick="modifierImage(${index})">Modifier l'image</button>
                     </div>
@@ -328,15 +332,14 @@
             const lecteur = new FileReader();
             lecteur.onload = async (e) => {
                 const imageUrl = e.target.result;
-                const titre = titleInput.value.trim() || 'Sans titre';
+                const titre = titleInput.value.trim() || 'Sans titre';  // on garde le titre dans l'objet (non affiché)
                 const texte = texteInput.value.trim() || '(sans description)';
                 const nouvelElement = {
                     image: imageUrl,
-                    title: titre,
+                    title: titre,           // stocké mais non utilisé dans l'affichage actuel
                     texte: texte,
                     date: new Date().toLocaleString(),
-                    width: width,
-                    height: height
+                    height: height           // hauteur fixe pour l'image
                 };
                 elements.push(nouvelElement);
                 if (await sauvegarderDonnees()) {
