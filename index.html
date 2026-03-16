@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Administration</title>
+    <style>
+       
+        #contenu { margin-top: 20px; }
+      
+        #ajout-form { margin-top: 20px;border:1px solid #D2B48C; padding: 15px; background:#1e1e24; display: none;width:80%; border-radius:20px;
+         }
+    
+       #title-input{
+           border-radius:15px;
+        background:#1c1c1e;
+        border:1px solid #D2B48C;
+        color: white;
+       } 
+    #texte-input{
+        width:150px;
+        border-radius:15px;
+        background:#1c1c1e;
+        color: white;
+        border:1px solid #D2B48C;
+    }   
+    
+    image-input{
+        background:#D2B48C;
+    }
+    body,html{
+        padding:0;
+        margin:0;
+    }
+    body{
+        background:#121212;
+        color:#eee;
+        
+    }
+    main{
+     display:flex;
+     flex-direction:column;
+     align-items: center;
+       
+    }
+    footer{
+        text-align:center;
+    }
+    h1{
+        color:#00F2ff;
+        font-family:fantasy;
+        font-size:50px;
+    }
+    header{
+        text-align:center;
+        color:#eee;
+        font-size:30px;
+        font-family:cursive;
+        position: fixed;
+            width: 100%;
+            z-index: 1000;
+            background:#1e1e24;
+        
+    }
+     #pointer{
+            font-size:30px;
+            position: relative;
+            left:80px;
+            cursor:pointer;
+          color:#00F2ff;
+        }
+        /* for button in each post */
+   .btn{
+            background:#1c1c1e;
+            border:1px solid #D2B48C;
+            width:100px;
+            height:35px;
+            border-radius:25px;
+             cursor:pointer;
+        }
+        /* to align btns */
+       /* La grande div devient un repère pour le positionnement absolu */
+
+/* Le conteneur des boutons est placé en bas */
+#btn-div {
+  position: absolute;
+  bottom: 10px;        /* ajustez pour "presqu'à la fin" (10px du bas) */
+  left: 0;
+  width: 100%;          /* occupe toute la largeur */
+  display: flex;
+  justify-content: center; /* centre les boutons horizontalement (vous pouvez changer) */
+  gap: 10px;            /* espace de 10px entre les boutons */
+}
+           
+        #ajouter{
+            background-color: transparent;
+            border: 2px solid #D2B48C;
+            color:#D2B48C;
+            margin-bottom: 20px;
+            height:35px;
+        }
+
+    </style>
+</head>
+<body>
+ <header><img style="border-radius:3000px;clip-path:circle(50% at 50% 50%);width:30px;height:30px; background:white; position:relative;right:85px;" src="https://i.ibb.co/C5hDb54V/126509.png" alt="">Boutique<span id="pointer"><b>&#8942</b></span></header><br><br> 
+ <main>
+  <h1>
+        Achetez nos produits exception-<br>nels 
+    </h1>
+  
+  
+  
+  <br><br><br>
+    <button id="ajouter"><i class="fas fa-plus-circle"></i> Ajouter un élément</button>
+    <div id="contenu"></div>
+
+    <!-- Formulaire d'ajout -->
+    <div id="ajout-form">
+        <h3>Nouvel élément</h3>
+        <textarea id="title-input" placeholder="titre" required></textarea>
+        <input type="file" id="image-input" accept="image/*"><br><br>
+        <textarea id="texte-input" placeholder="Texte de l'article" rows="4" cols="50" required></textarea><br><br>
+        <button id="ajouter-element" style="background:#00FFAA;border:1px solid #00FFAA; border-radius:8px;width:80px; height:30px;">Publier</button>
+        <button id="annuler" style="background:#FF4D4D;border:1px solid #FF4D4D; border-radius:8px;width:80px; height:30px;"> Annuler</button>
+    </div>
+</main>
+<br><br><br><br> <br><br><br><br>
+<hr>
+<footer>
+    All rights reserved.©2026
+ <br>   by <a href="botolo40.github.io/mindy/" style="color:#E6C200;">MindyEntreprise</a>
+</footer>
+    <script>
+        // Vos identifiants
+        const BIN_ID = '69b7fd00c3097a1dd52d4ef1';
+        const API_KEY = '$2a$10$JRui1R/HR86PR7CN1SitdekmJGwxztWm92GNShHT/i...4sMbKlb.'; // Votre clé complète
+
+        const READ_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}/latest`;
+        const WRITE_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
+
+        // Éléments DOM
+        const boutonAjouter = document.getElementById('ajouter');
+        const contenuDiv = document.getElementById('contenu');
+        const ajoutForm = document.getElementById('ajout-form');
+        const imageInput = document.getElementById('image-input');
+        const titleInput= document.getElementById('title-input');
+        const texteInput = document.getElementById('texte-input');
+        const ajouterElement = document.getElementById('ajouter-element');
+        const annuler = document.getElementById('annuler');
+
+
+        const height = 320;
+
+        let elements = []; // Tableau local des articles
+
+        // Charger les données depuis JSONBin
+        async function chargerDonnees() {
+            try {
+                const response = await fetch(READ_URL); // Pas besoin de clé pour lire (bin public)
+                const data = await response.json();
+                elements = data.record.articles || [];
+                afficherElements();
+            } catch (error) {
+                console.error('Erreur de chargement', error);
+            }
+        }
+
+        // Sauvegarder les données sur JSONBin (nécessite la clé)
+        async function sauvegarderDonnees() {
+            try {
+                const response = await fetch(WRITE_URL, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Master-Key': API_KEY
+                    },
+                    body: JSON.stringify({ articles: elements }) // On renvoie l'objet complet
+                });
+                if (!response.ok) {
+                    throw new Error(`Erreur HTTP ${response.status}`);
+                }
+                return true;
+            } catch (error) {
+                alert('Erreur lors de la sauvegarde : ' + error.message);
+                return false;
+            }
+        }
+
+        // Afficher tous les éléments avec boutons d'action
+        function afficherElements() {
+            contenuDiv.innerHTML = '';
+            elements.forEach((element, index) => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'item';
+                itemDiv.innerHTML = `
+         <p style="font-size:35px;color:#D2B48C;"><b>{element.texte}</b></p>          
+              <!-- div for all posts -->   <div style="border-radius:20px;border:1px solid #D2B48C;background: #1e1e24;width:280px;height:500px;color:#ccc;text-align:center;position:relative;"  id="div"><i>
+                  
+              <br><br><br>    
+                   
+                    <img src="${element.image}" height="${element.height}" style="vertical-align:top; margin-right:10px;">
+                  
+                        
+                        
+                        <p><strong>${element.texte}</strong></p>
+                        
+                        <p><small>Publié le ${element.date}</small></p>
+                     <p>Contactez la personne qui vend!</p>   
+                <div id="btn-div"><button class="btn"><i class="fas fa-phone" style="color:#D2B48C;font-size:25px;"></i></button><button class="btn"><i class="fas fa-share-alt" Style="font-size:25px;color:#D2B48C;"></i></button><br></div>        
+                        
+ </i> </div>                      
+                        
+                        
+                        
+                        <button onclick="modifierElement(${index})"><i class="fas fa-settings-icon"></i>Modifier</button>
+                        <button onclick="supprimerElement(${index})"> Supprimer</button>
+                    </div>
+                    <div id="options-${index}" style="display:none; margin-top:10px; clear:both;">
+                        <button onclick="modifierTexte(${index})">Modifier le texte</button>
+                        <button onclick="modifierImage(${index})">Modifier l'image</button>
+                    </div>
+                `;
+                contenuDiv.appendChild(itemDiv);
+            });
+        }
+
+        // Fonctions globales pour les boutons (nécessaires car innerHTML)
+        window.modifierElement = function(index) {
+            const options = document.getElementById(`options-${index}`);
+            options.style.display = options.style.display === 'none' ? 'block' : 'none';
+        };
+
+        window.modifierTexte = async function(index) {
+            const nouveauTexte = prompt('Nouveau texte :', elements[index].texte);
+            if (nouveauTexte !== null) {
+                elements[index].texte = nouveauTexte;
+                if (await sauvegarderDonnees()) {
+                    afficherElements();
+                }
+            }
+        };
+
+        window.modifierImage = async function(index) {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'image/*';
+            input.onchange = (e) => {
+                const fichier = e.target.files[0];
+                const lecteur = new FileReader();
+                lecteur.onload = async (ev) => {
+                    elements[index].image = ev.target.result;
+                    if (await sauvegarderDonnees()) {
+                        afficherElements();
+                    }
+                };
+                lecteur.readAsDataURL(fichier);
+            };
+            input.click();
+        };
+
+        window.supprimerElement = async function(index) {
+            if (confirm('Supprimer cet élément ?')) {
+                elements.splice(index, 1);
+                if (await sauvegarderDonnees()) {
+                    afficherElements();
+                }
+            }
+        };
+
+        // Gestion du formulaire d'ajout
+        boutonAjouter.addEventListener('click', () => {
+            ajoutForm.style.display = 'block';
+        });
+
+        annuler.addEventListener('click', () => {
+            ajoutForm.style.display = 'none';
+            imageInput.value = '';
+            texteInput.value = '';
+            titleInput.value = '';
+            
+        });
+
+        ajouterElement.addEventListener('click', async () => {
+            const fichier = imageInput.files[0];
+            if (!fichier) {
+                alert('Veuillez sélectionner une image.');
+                return;
+            }
+            const lecteur = new FileReader();
+            lecteur.onload = async (e) => {
+                const imageUrl = e.target.result;
+                const texte = texteInput.value.trim() || '(sans texte)';
+                const nouvelElement = {
+                    image: imageUrl,
+                    texte: texte,
+                    title: title,
+                    date: new Date().toLocaleString(),
+                    width: width,
+                    height: height
+                };
+                elements.push(nouvelElement);
+                if (await sauvegarderDonnees()) {
+                    afficherElements();
+                    ajoutForm.style.display = 'none';
+                    imageInput.value = '';
+                    texteInput.value = '';
+                    titleInput.value
+= '';
+                } else {
+                    elements.pop(); // annuler en cas d'échec
+                }
+            };
+            lecteur.readAsDataURL(fichier);
+        });
+
+        // Initialisation : charger les données au démarrage
+        chargerDonnees();
+    </script>
+</body>
+  </html>
